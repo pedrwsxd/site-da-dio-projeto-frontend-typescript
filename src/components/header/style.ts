@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   width: 100%;
@@ -70,6 +71,7 @@ export const UserPicture = styled.img`
     height: 32px;
     border-radius: 22px;
     border: 2px solid #FFF;
+    margin-right: 12px;
 `
 
 export const Input = styled.input`
@@ -80,3 +82,8 @@ export const Input = styled.input`
     padding: 6px 5px;
     border-radius: 8px;
     `
+
+export const ButtonSingOut = styled(Link)`
+    text-decoration: none;
+    color: #FFF;
+`

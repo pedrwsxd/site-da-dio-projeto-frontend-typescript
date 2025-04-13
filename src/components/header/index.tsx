@@ -1,21 +1,26 @@
 import React from 'react'
 import logo from '../../assets/logo-dio.svg'
 import { Button } from '../button'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
     Container,
     BuscarInputContainer,
     Input,
-    Column,
     Row,
     UserPicture,
     Menu,
     MenuRight,
-    Wrapper
+    Wrapper,
+    ButtonSingOut
 } from './style'
 import { IHeader } from './types'
+import { AuthContext } from '../../context/auth'
+import { useAuth } from '../../hooks/useAuth'
 
-const Header = ({ autenticado, onClick }: IHeader) => {
+
+const Header = ({ onClick }: IHeader) => {
+
+    const { user, handleSignOut } = useAuth();
 
     const navigate = useNavigate();
 
@@ -36,26 +41,34 @@ const Header = ({ autenticado, onClick }: IHeader) => {
             <Container>
                 <Row>
                     <img src={logo} alt="Logo da dio" onClick={handleClickHome} />
-                    {autenticado ? (
-                        <>
-                            <BuscarInputContainer>
-                                <Input placeholder="Buscar..." />
-                            </BuscarInputContainer>
-                            <Menu>Live Code</Menu>
-                            <Menu>Global</Menu>
-                        </>
-                    ) : null}
+                    {
+                        user.id ? (
+                            <>
+                                <BuscarInputContainer>
+                                    <Input placeholder="Buscar..." />
+                                </BuscarInputContainer>
+                                <Menu>Live Code</Menu>
+                                <Menu>Global</Menu>
+                            </>
+                        ) : null}
                 </Row>
                 <Row>
-                    {autenticado ? (
-                        <UserPicture src='https://github.com/pedrwsxd.png' />
-                    ) : (
-                        <>
-                            <MenuRight onClick={handleClickHome}>Home</MenuRight>
-                            <Button title="Entrar" onClick={handleClickSignIn} />
-                            <Button title="Cadastrar" onClick={handleClickRegister} />
-                        </>
-                    )}
+                    {
+                        user.id ? (
+                            <>
+                            <UserPicture src='https://github.com/pedrwsxd.png' />
+                            <ButtonSingOut to='/' onClick={ handleSignOut }>
+                            Sair
+                            </ButtonSingOut>
+                            </>
+                           
+                        ) : (
+                            <>
+                                <MenuRight onClick={handleClickHome}>Home</MenuRight>
+                                <Button title="Entrar" onClick={handleClickSignIn} />
+                                <Button title="Cadastrar" onClick={handleClickRegister} />
+                            </>
+                        )}
                 </Row>
             </Container>
         </Wrapper>

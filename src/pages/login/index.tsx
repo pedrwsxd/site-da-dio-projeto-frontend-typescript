@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { useNavigate } from 'react-router-dom'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -8,9 +7,9 @@ import { MdEmail, MdLock } from 'react-icons/md'
 import { Header } from '../../components/header'
 import { Button } from '../../components/button'
 import { Input } from '../../components/input'
-import { api } from '../../services/api'
 import { Column, Container, CriarText, EsqueciText, Row, SubTitleLogin, Title, TitleLogin, Wrapper } from './style'
 import { IFormData, ILogin} from './types'
+import { useAuth } from '../../hooks/useAuth'
 
 
 const schema = yup
@@ -23,6 +22,7 @@ const schema = yup
 const Login = ({onClick}: ILogin) => {
 
     const navigate = useNavigate();
+    const { handleLogin } = useAuth();
 
     const {
         control,
@@ -36,17 +36,7 @@ const Login = ({onClick}: ILogin) => {
     console.log(isValid, errors);
 
     const onSubmit = async (formData: IFormData) => {
-        try {
-            const { data } = await api.get(`users?email=${formData.email}&senha=${formData.password}`);
-            if (data.length === 1) {
-                navigate('/feed')
-            } else {
-                alert('Email ou senha incorretos')
-            }
-
-        } catch {
-            alert('Houve um erro')
-        }
+       handleLogin(formData);
     };
 
     const handleClickRegister = () => {

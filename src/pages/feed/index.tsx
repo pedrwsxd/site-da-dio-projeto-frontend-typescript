@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Header } from '../../components/header'
 import { Card } from '../../components/card'
 import { UserInfo } from '../../components/userInfo'
 import { Container, Column, Title, TitleHighlight } from './style'
+import { AuthContext } from '../../context/auth'
 
 const Feed = () => {
+
     return (<>
-        <Header autenticado={true} />
+        <Header />
         <Container>
             <Column flex={3}>
             <Title>Feed</Title>
